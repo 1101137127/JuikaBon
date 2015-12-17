@@ -4,28 +4,12 @@ header("Content-Type:text/html; charset=utf-8");
 include("../connectDBModel/db.php");
 echo '<a href="../login/model/logout.php">登出</a>  <br><br>';
 
-if($_SESSION['store_id'] != null)
-{
+if($_SESSION['store_id'] != null) {
+	
 	$storeid = $_SESSION['store_id'];
     $stmt = $conn->prepare("SELECT * FROM `store` WHERE `store_id` = $storeid ");
 	$stmt->execute();
 	$list.='';
-	
-	/*
-	foreach ($stmt->fetchAll(PDO::FETCH_ASSOC) as $row) {
-		$list.='<font face="微軟正黑體">
-					<ul data-role="listview" data-inset="true">
-						<li data-icon="false"><div data-role="fieldcontain">
-							<label for="storename">店家名稱:</label><input type="text" style="border:0px;" readonly="true" name="storename" id="storename" value="'.$row['store_name'].'"></div>
-						</li>
-						<li data-icon="false"><b>店家電話:</b>'.$row['store_phone'].'</li>
-						<li data-icon="false"><b>店家地址:</b>'.$row['store_address'].'</li>
-						<li data-icon="false"><b>負責人:</b>'.$row['principal_name'].'</li>
-						<li data-icon="false"><b>負責人電話:</b>'.$row['principal_phone'].'</li>
-					</ul>
-				</font>';
-	}
-	*/
 	
 	foreach ($stmt->fetchAll(PDO::FETCH_ASSOC) as $row) {
 		$list.='<font face="微軟正黑體">
@@ -39,10 +23,8 @@ if($_SESSION['store_id'] != null)
 					</ul>
 				</font>';
 	}
-	
 }
-else
-{
+else {
         echo '您無權限觀看此頁面!';
         echo '<meta http-equiv=REFRESH CONTENT=2;url=index.php>';
 }
@@ -129,18 +111,6 @@ else
 		  <a href="ShowPasswordEdit.php" style="float:right;" id="editpdBtn" name="editpdBtn" data-role="button"  data-mini="true" data-inline="true"  data-iconpos="right">修改密碼</a>
 		  <a style="float:right;" onclick="edit()" id="editBtn" name="editBtn" data-role="button"  data-mini="true" data-inline="true"  data-iconpos="right">編輯</a>
 	    <br/>
-			 <!--
-			 <font face="微軟正黑體">
-				<ul data-role="listview" data-inset="true">
-				  <li data-icon="false"><b>店家名稱:</b> 丹丹漢堡</li>
-				  <li data-icon="false"><b>店家電話:</b> (07)3525289</li>
-				  <li data-icon="false"><b>店家地址:</b> 高雄市大社區中山路</li>
-				  <li data-icon="false"><b>負責人:</b> 李丹丹</li>
-				  <li data-icon="false"><b>負責人電話:</b> 0935588558</li>
-				  <li data-icon="false"><b>自我介紹:</b> 你好！歡迎光臨丹丹大社店，很高興為您服務！</li>
-				  <li data-icon="false"><b>近期優惠:</b> 凡購買任一定食套餐，可樂+2元升級大杯</li>
-				</ul>
-			 </font>	-->	
 			 <br/>
 			 <form action="DoUpdateStore.php" method="post"  data-ajax="false">
 				 <?php echo $list ?>

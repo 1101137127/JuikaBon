@@ -8,10 +8,11 @@
     $reward_pt = $_POST["reward_pt"];
     $stmt = $conn->prepare("UPDATE `questionnaire` SET `qst_name`='$qst_name',`start_date`='$start_date',`end_date`='$end_date',`reward_pt`='$reward_pt' WHERE `qst_id`='$qst_id'");
     $result = $stmt->execute();
+	
     if($result === true){
-     echo ("修改成功"); 
+		echo "修改成功"; 
     }
     else{
-        echo "修改失敗";
+		echo "修改失敗";
     }
 ?>

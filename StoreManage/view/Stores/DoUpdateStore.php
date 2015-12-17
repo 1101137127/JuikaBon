@@ -20,15 +20,6 @@ if($_SESSION['store_id'] != null)
 							WHERE `store_id` = $storeid ");
 	$stmt->execute();
 	
-	
-	/*
-	$url="http://140.133.74.58/test/store/StoreManage/view/Stores/Store.php";
-	header("Location:".$url);
-	exit;
-	*/
-	
-	//document.location.href="Store.php";
-	
 	header('Location:Store.php');
 	
 }

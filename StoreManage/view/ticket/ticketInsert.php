@@ -10,10 +10,11 @@
     $count = count($QtableData);
     $stmt = $conn->prepare("INSERT INTO coupon(`coupon_id`,`coupon_name`,`start_date`,`end_date`,`use_enddate`,`ps`) VALUES ('$coupon_id','$coupon_name','$start_date','$end_date','$use_enddate','$ps')");
     $result = $stmt->execute();
+	
     if($result === true){
-     echo ("新增成功"); 
+		echo "新增成功"; 
     }
     else{
-        echo "新增失敗";
+		echo "新增失敗";
     }
 ?>

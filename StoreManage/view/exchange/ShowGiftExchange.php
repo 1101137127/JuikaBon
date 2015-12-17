@@ -22,9 +22,7 @@ include("../connectDBModel/db.php");
 		$memname=$row1['name'];
 	}
 	$list.='兌換人：' . $memname . '<br/><br/> 欲兌換禮品：<br/>';
-	
-	
-	
+
 	foreach ($stmt->fetchAll(PDO::FETCH_ASSOC) as $row) {
 		$list.='
 		<li>
@@ -33,21 +31,10 @@ include("../connectDBModel/db.php");
 		
 	}
 	
-	
 	if($list=='') {
 		echo "<script>alert('無申請記錄');</script>"; 
 		echo "<meta http-equiv='Refresh' content='0;URL=GiftExchange.php'>"; 
 	}
-	/*
-	foreach ($stmt->fetchAll(PDO::FETCH_ASSOC) as $row) {
-		$list.='<li class="ui-li-has-thumb ui-first-child">
-		<a href="GiftDetail.php?id=' . $row['gift_id'] . '" class="ui-btn ui-btn-icon-right ui-icon-carat-r">
-		<input type="checkbox" name="id[]" style="display:none;" value='.$row['gift_id'].'>' . $row['gift_name'] . '
-		
-		</a></li>';
-	}
-	*/
-
 ?>
 
 <!DOCTYPE html>

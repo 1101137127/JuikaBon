@@ -12,9 +12,6 @@ include("../connectDBModel/db.php");
 		$stmt->execute();
 
 
-echo '兌換成功!';		
-
-//header('Location: http://140.133.74.58/test/store/StoreManage/view/home/home.php');
-		
+echo '兌換成功!';
 
 ?>

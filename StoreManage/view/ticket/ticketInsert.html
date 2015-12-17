@@ -1,0 +1,250 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="../../jquery-mobile-css/bootstrap.min.css" rel="stylesheet">
+<link href="../../jquery-mobile-css/carousel.css" rel="stylesheet">
+  <link rel="stylesheet" href="../../jquery-mobile-css/jquery.mobile-1.4.5.min.css">
+  <!-- Include the jQuery library -->
+  <script src="../../jquery-mobile-js/jquery-2.1.4.min.js"></script>
+  <!-- Include the jQuery Mobile library -->
+  <script src="../../jquery-mobile-js/jquery.mobile-1.4.5.min.js"></script>
+  <script src="../../jquery-mobile-js/bootstrap.min.js"></script>
+  <script src="../../jquery-mobile-js/jssor.js"></script>
+  <script src="../../jquery-mobile-js/jssor.slider.js"></script>
+  <style>
+    .member-main{
+      border:0px solid;
+      width:100%;
+      height:200px;
+    }
+    .dimg{height:200px;}
+    ul.primary-menu {
+    border-top:none;
+    }
+    ul.primary-menu li a{
+    background: green ;
+    font-size:18px;
+    color:#ffffff ;
+    font-family: 'ramblabold', Arial, sans-serif;
+    border-bottom:1px solid #f2e3ea;
+    }
+	.Inputlabel{
+    font-family:Microsoft JhengHei;
+    font-size:25px;
+	}
+tr {
+    border: 1px solid lightgray;
+}
+  </style>
+  <script>
+  function Save (QtableData) {
+	  	var coupon_name = $("#Pageone").find("#coupon_name").val();
+	  	var start_date = $("#Pageone").find("#start_date").val();
+	  	var end_date = $("#Pageone").find("#end_date").val();
+	  	var use_enddate = $("#Pageone").find("#use_enddate").val();
+	  	var ps = $("#Pageone").find("#ps").val();
+	  	$.ajax({
+	      url: "ticketInsert.php", 
+	      type:"POST",
+	      data: {
+	      	coupon_name:coupon_name,
+	      	start_date:start_date,
+	      	end_date:end_date,
+	      	use_enddate:use_enddate,
+	      	ps:ps,
+	      	QtableData:QtableData
+	      },
+	      datatype:"text",//回傳的資料型態
+	      success: function(data){
+	      	alert(data);
+	      	 location.href = "ticket.php";
+	          },
+	          error:function(xhr, ajaxOptions, thrownError){ 
+	                    console.log(xhr.status); 
+	                    console.log(thrownError);
+	                 }
+
+	        });
+
+  	
+  };
+  function checkPageOneData(coupon_name,start_date,end_date,use_enddate){
+	  	var Empety = false;
+	  	if(coupon_name ==""){
+	  		Empety=true;
+	  		document.getElementById("coupon_name_errorMsg").style.display="block";
+	  	}
+	  	else if(coupon_name!=""){
+	  		document.getElementById("coupon_name_errorMsg").style.display="none";
+	  	}
+	  	if(start_date ==""){
+	  		Empety=true;
+	  		document.getElementById("start_date_errorMsg").style.display="block";
+	  	}
+	  	else if(start_date!=""){
+	  		document.getElementById("start_date_errorMsg").style.display="none";
+	  	}
+	  	if(end_date ==""){
+	  		Empety=true;
+	  		document.getElementById("end_date_errorMsg").style.display="block";
+	  	}
+	  	else if(end_date!=""){
+	  		document.getElementById("end_date_errorMsg").style.display="none";
+	  	}
+	  	if(use_enddate ==""){
+	  		Empety=true;
+	  		document.getElementById("use_enddate_errorMsg").style.display="block";
+	  	}
+	  	else if(use_enddate!=""){
+	  		document.getElementById("use_enddate_errorMsg").style.display="none";
+	  	}
+	  	if(Empety==true){
+	  		return false;
+	  	}
+	  	else if(Empety==false){
+	  		return true;
+	  	}
+	  }
+	  //PageOne 下一步按鈕
+	  function nextStep(){
+	  	var errorMsg="";
+	  	var coupon_name = $("#Pageone").find("#coupon_name").val();
+	  	var start_date = $("#Pageone").find("#start_date").val();
+	  	var end_date = $("#Pageone").find("#end_date").val();
+	  	var use_enddate = $("#Pageone").find("#use_enddate").val();
+	  	var checkData = checkPageOneData(coupon_name,start_date,end_date,use_enddate);
+	  	if(checkData == true){
+	  		window.location.href="#Pagetwo";
+	  	}
+	  	else{
+	  		alert("有欄位尚未輸入！");
+	  	}
+	  };
+
+    </script>
+</head>
+<body >
+<div data-role="page" id="Pageone" >
+   <!-- Pageone header -->
+	<div data-role="header" style=" background:#0097A7;border:0px;height:80px;">
+		<br/>
+		<div id='' class='' style="font-size:28px;color:white;text-align:center;">
+			<a href="#" class="ui-btn-left ui-btn ui-icon-back ui-btn-icon-left ui-shadow ui-corner-all" data-rel="back" data-role="button" role="button">返回</a>
+			揪客通
+			<a href="../home/home.php" target="_self" class="ui-btn-right ui-btn ui-icon-home ui-btn-icon-left ui-shadow ui-corner-all" data-role="button" role="button">首頁</a>
+		</div>
+	</div>
+    <div style="background:#001F33;border:0px;height:50px;">
+      <br/>
+      <div style="font-size:22px;color:white;text-align:center;">新增抽獎</div>
+    </div>
+  <!-- End Pageone header -->
+
+  <!-- Pageone main -->
+  <div data-role="main" class="ui-content" id="content" style="margin:0 auto;height:650px;background:white;">
+	<div id='member-main-downcontent' class='member-main col-lg-12 col-md-12 col-sm-12 col-xs-12'>
+            <div id='' style="margin:0 auto;width:100%">
+			<form method="post" action="questionnaire_InsertQList.php">
+				<div data-role="fieldcontain" >
+					<label class="Inputlabel" for="coupon_name" >抽獎名稱</label>
+					<input type="text" name="coupon_name" id="coupon_name" value=""  />
+					<label id="coupon_name_errorMsg" style="color:red;display:none;" >抽獎名稱未填</label>
+				</div>
+				<div data-role="fieldcontain">	
+					<label class="Inputlabel" for="start_date">開始領取日期</label>
+					<input type="date" name="start_date" id="start_date" value=""  />
+					<label id="start_date_errorMsg" style="color:red;display:none;" >開始領取日期未填</label>
+				</div>
+				<div data-role="fieldcontain">
+					<label class="Inputlabel" for="end_date">領取截止日期</label>
+					<input type="date" name="end_date" id="end_date" value=""  />
+					<label id="end_date_errorMsg" style="color:red;display:none;" >領取截止日期</label>
+				</div>
+				<div data-role="fieldcontain">
+					<label class="Inputlabel" for="use_enddate">使用截止日期</label>
+					<input type="date" name="use_enddate" id="use_enddate" value=""  />
+					<label id="use_enddate_errorMsg" style="color:red;display:none;" >使用截止日期</label>
+				</div>
+				<div data-role="fieldcontain">
+					<label class="Inputlabel" for="end_date">說明</label>
+					<input type="text" name="ps" id="ps" value=""  />
+					<label id="ps_errorMsg" style="color:red;display:none;" >說明</label>
+				</div>
+				<a href="../home/home.php" data-ajax="false" data-role="button" data-mini="true" data-inline="true" data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" class="ui-btn ui-shadow ui-btn-corner-all ui-btn-inline ui-btn-up-c">
+				取消</a>
+				<a onclick="Save()" id="submitBtn" name="submitBtn" data-role="button"  data-mini="true" data-inline="true" data-theme="b" data-iconpos="left">儲存</a>
+			</form>
+				
+            </div><!-- 內框div -->
+          </div><!-- member-main-downcontent -->
+  </div><!-- END Pageone main -->
+  <div data-role="footer" style="text-align:center;width:100%;height:60px;background:white;border:0px;">
+     
+  </div> 
+</div>
+<!--end pageone -->
+
+<div data-role="page" id="Pagetwo" >
+   <!-- Pagetwo header -->
+	<div data-role="header" style=" background:#0097A7;border:0px;height:80px;">
+		<br/>
+		<div id='' class='' style="font-size:28px;color:white;text-align:center;">
+			<a href="#" class="ui-btn-left ui-btn ui-icon-back ui-btn-icon-left ui-shadow ui-corner-all" data-rel="back" data-role="button" role="button">返回</a>
+			揪客通
+			<a href="../home/home.php" target="_self" class="ui-btn-right ui-btn ui-icon-home ui-btn-icon-left ui-shadow ui-corner-all" data-role="button" role="button">首頁</a>
+		</div>
+	</div>
+    <div style="background:#001F33;border:0px;height:50px;">
+      <br/>
+      <div style="font-size:22px;color:white;text-align:center;">新增抽獎題目</div>
+    </div>
+  <!-- End Pagetwo header -->
+
+  <!-- Pagetwo main -->
+  <div data-role="main" class="ui-content" id="content" style="margin:0 auto;height:650px;background:white;">
+	<div id='member-main-downcontent' class='member-main col-lg-12 col-md-12 col-sm-12 col-xs-12'>
+            <div id='' style="margin:0 auto;width:100%">
+			<form method="post" id="QListForm" action="questionnaire_InsertQList.php">
+			<div id="QList" name="QList">
+				<table data-role="table" class="ui-responsive ui-shadow" name="QTable" id="QTable">
+					  <thead>
+						<tr>
+						  <th >第01題</th>
+						  <td colspan="5"><input type="text" data-mini="true" id="test" /></td>
+						</tr>
+					  </thead>
+					  <tbody>
+						<tr>
+						  <td>1</td>
+						  <td>非常滿意</td>
+						</tr>
+						<tr>
+						  <td>2</td>
+						  <td>滿意</td>
+						</tr>
+						<tr>
+						  <td>3</td>
+						  <td>不滿意</td>
+						</tr>
+						<tr>
+						  <td>4</td>
+						  <td>非常不滿意</td>
+						</tr>
+
+					  </tbody>
+					</table>
+			</div>
+			</form>
+            </div><!-- 內框div -->
+			<a id="addSubjectBtn" name="addSubjectBtn" data-role="button" data-icon="plus" data-mini="true" data-inline="true" data-theme="b" data-iconpos="left">新增題目</a>
+			<a id="submitBtn" name="submitBtn" data-role="button"  data-mini="true" data-inline="true" data-theme="b" data-iconpos="left">儲存</a>
+          </div><!-- member-main-downcontent -->
+  </div><!-- END Pagetwo main -->
+  <div data-role="footer" style="text-align:center;width:100%;height:60px;background:white;border:0px;">
+     
+  </div> 
+</div>
+<!--end Pagetwo -->
+</body>
+</html>

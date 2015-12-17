@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title></title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="../../jquery-mobile-css/bootstrap.min.css" rel="stylesheet">
+<link href="../../jquery-mobile-css/carousel.css" rel="stylesheet">
+  <link rel="stylesheet" href="../../jquery-mobile-css/jquery.mobile-1.4.5.min.css">
+  <!-- Include the jQuery library -->
+  <script src="../../jquery-mobile-js/jquery-2.1.4.min.js"></script>
+  <!-- Include the jQuery Mobile library -->
+  <script src="../../jquery-mobile-js/jquery.mobile-1.4.5.min.js"></script>
+  <script src="../../jquery-mobile-js/bootstrap.min.js"></script>
+  <script src="../../jquery-mobile-js/jssor.js"></script>
+  <script src="../../jquery-mobile-js/jssor.slider.js"></script>
+  <style>
+    .member-main{
+      border:0px solid;
+      width:100%;
+      height:300px;
+    }
+    .dimg{height:200px;}
+    ul.primary-menu {
+    border-top:none;
+    }
+    ul.primary-menu li a{
+    background: green ;
+    font-size:18px;
+    color:#ffffff ;
+    font-family: 'ramblabold', Arial, sans-serif;
+    border-bottom:1px solid #f2e3ea;
+    }
+  </style>
+<script type="text/javascript">
+$(document).ready(function () {
+    function convertToISO(timebit) {
+    // remove GMT offset
+    timebit.setHours(0, -timebit.getTimezoneOffset(), 0, 0);
+    // format convert and take first 10 characters of result
+    var isodate = timebit.toISOString().slice(0,10);
+    return isodate;
+  }
+  var start_date = document.getElementById('start_date');
+  var end_date = document.getElementById('end_date');
+  var currentdate = new Date();
+  start_date.min = convertToISO(currentdate);
+  start_date.placeholder = start_date.min;
+  end_date.min=convertToISO(currentdate);
+  end_date.placeholder = end_date.min;
+  });
+
+ function Insert () {
+
+      var mess_name = $("#Pageone").find("#mess_name").val();
+      var mess_content = $("#Pageone").find("#mess_content").val();
+      var start_date = $("#Pageone").find("#start_date").val();
+      var end_date = $("#Pageone").find("#end_date").val();
+
+      var checkData = checkPageOneData(mess_name,start_date,end_date,mess_content);
+      if(checkData == true){
+        $.ajax({
+        url: "./model/Insert_message.php", 
+        type:"POST",
+        data: {
+          mess_name:mess_name,
+          start_date:start_date,
+          end_date:end_date,
+          mess_content:mess_content
+        },
+        datatype:"text",//回傳的資料型態
+        success: function(data){
+          alert(data);
+           location.href = "message.php";
+            },
+            error:function(xhr, ajaxOptions, thrownError){ 
+                      console.log(xhr.status); 
+                      console.log(thrownError);
+                   }
+
+          });
+      }
+      else{
+        alert("有欄位未正確填寫，請確認！");
+      }
+      
+    
+  };
+function checkPageOneData(mess_name,start_date,end_date,mess_content){
+      var Empety = false;
+      if(mess_name ==""){
+        Empety=true;
+        document.getElementById("mess_name_errorMsg").style.display="block";
+      }
+      else if(mess_name!=""){
+        document.getElementById("mess_name_errorMsg").style.display="none";
+      }
+      if(start_date ==""){
+        Empety=true;
+        document.getElementById("start_date_errorMsg").style.display="block";
+      }
+      else if(start_date!=""){
+        document.getElementById("start_date_errorMsg").style.display="none";
+      }
+      if(end_date ==""){
+        Empety=true;
+        document.getElementById("end_date_errorMsg").style.display="block";
+      }
+      else if(end_date!=""){
+        document.getElementById("end_date_errorMsg").style.display="none";
+      }
+      if(mess_content ==""){
+        Empety=true;
+        document.getElementById("mess_content_errorMsg").style.display="block";
+      }
+      else if(mess_content!=""){
+        document.getElementById("mess_content_errorMsg").style.display="none";
+      }
+      if(start_date!="" && end_date!=""){
+        if(start_date>=end_date){
+          Empety=true;
+          document.getElementById("start_date_checkMsg").style.display="block";
+        }
+        else{
+          document.getElementById("start_date_checkMsg").style.display="none";
+        }
+      }
+      if(Empety==true){
+        return false;
+      }
+      else if(Empety==false){
+        return true;
+      }
+    }
+
+
+
+  </script>
+</head>
+<body >
+<div data-role="page" id="Pageone" >
+   <!-- Pageone header -->
+	<div data-role="header" style=" background:#0097A7;border:0px;height:80px;">
+    <div id='' class='' style="font-size:28px;color:white;text-align:center;">
+      <a href="#" data-ajax="false" class="ui-btn-left ui-btn ui-icon-back ui-btn-icon-left ui-shadow ui-corner-all" data-rel="back" data-role="button" role="button">返回</a>
+      <img src="../../image/logo.png" width="200px" height="80px">  
+      <a href="../home/home.php" target="_self" class="ui-btn-right ui-btn ui-icon-home ui-btn-icon-left ui-shadow ui-corner-all" data-role="button" role="button">首頁</a>
+    </div>
+  </div>
+    <div style="background:#001F33;border:0px;height:50px;">
+      <br/>
+      <div style="font-size:22px;color:white;text-align:center;">訊息新增</div>
+    </div>
+  <!-- End Pageone header -->
+
+  <!-- Pageone main -->
+  <div data-role="main" class="ui-content" id="content" style="margin:0 auto;height:650px;background:white;">
+	<div id='member-main-downcontent' class='member-main col-lg-12 col-md-12 col-sm-12 col-xs-12'>
+            <div id='' style="margin:0 auto;width:100%">
+            <form method="post" action="questionnaire_InsertQList.php">
+                <div data-role="fieldcontain" >
+                     <label class="Inputlabel" for="mess_name" >訊息名稱</label>
+                     <input type="text" name="mess_name" id="mess_name" value=""  />
+                     <label id="mess_name_errorMsg" style="color:red;display:none;" >訊息名稱未填</label>
+                </div>
+                <div data-role="fieldcontain" >
+                     <label class="Inputlabel" for="start_date" >開始推播日期</label>
+                     <input type="date" name="start_date" id="start_date" value=""  />
+                     <label id="start_date_errorMsg" style="color:red;display:none;" >開始推播日期未填</label>
+                     <label id="start_date_checkMsg" style="color:red;display:none;" >啟用日期不能大等於結束日</label>
+                </div>
+                <div data-role="fieldcontain" >
+                     <label class="Inputlabel" for="end_date" >結束推播日期</label>
+                     <input type="date" name="end_date" id="end_date" value=""  />
+                     <label id="end_date_errorMsg" style="color:red;display:none;" >結束推播日期未填</label>
+                </div>
+                <div data-role="fieldcontain">  
+                     <label class="Inputlabel" for="mess_content">訊息內容</label>
+                     <textarea cols="50" rows="5" name="mess_content" id="mess_content"></textarea>
+                     <label id="mess_content_errorMsg" style="color:red;display:none;" >訊息內容未填</label>
+                </div>
+                <a href="../home/home.php" data-ajax="false" data-role="button" data-mini="true" data-inline="true" data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" class="ui-btn ui-shadow ui-btn-corner-all ui-btn-inline ui-btn-up-c">取消</a>
+                <a onclick="Insert()" id="submitBtn" name="submitBtn" data-ajax="false" data-role="button" data-mini="true" data-inline="true" data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" class="ui-btn ui-shadow ui-btn-corner-all ui-btn-inline ui-btn-up-c">儲存</a>
+            </form>
+            </div><!-- 內框div -->
+    <div>
+    
+    </div>
+    </div><!-- member-main-downcontent --></div><!-- END Pageone main -->
+  <div data-role="footer" style="text-align:center;width:100%;height:60px;background:white;border:0px;">
+     
+  </div> 
+</div>
+<!--end pageone -->
+</body>
+</html>

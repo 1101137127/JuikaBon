@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title></title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="../../jquery-mobile-css/bootstrap.min.css" rel="stylesheet">
+<link href="../../jquery-mobile-css/carousel.css" rel="stylesheet">
+  <link rel="stylesheet" href="../../jquery-mobile-css/jquery.mobile-1.4.5.min.css">
+  <!-- Include the jQuery library -->
+  <script src="../../jquery-mobile-js/jquery-2.1.4.min.js"></script>
+  <!-- Include the jQuery Mobile library -->
+  <script src="../../jquery-mobile-js/jquery.mobile-1.4.5.min.js"></script>
+  <script src="../../jquery-mobile-js/bootstrap.min.js"></script>
+  <script src="../../jquery-mobile-js/jssor.js"></script>
+  <script src="../../jquery-mobile-js/jssor.slider.js"></script>
+  <style>
+    .member-main{
+      border:0px solid;
+      width:100%;
+      height:300px;
+    }
+    .dimg{height:200px;}
+    ul.primary-menu {
+    border-top:none;
+    }
+    ul.primary-menu li a{
+    background: green ;
+    font-size:18px;
+    color:#ffffff ;
+    font-family: 'ramblabold', Arial, sans-serif;
+    border-bottom:1px solid #f2e3ea;
+    }
+
+
+  </style>
+  <script>
+     function search(obj){
+      obj.focus();
+      //alert(obj.options[obj.selectedIndex].value)
+    }  
+  </script>
+</head>
+<body >
+<div data-role="page" id="pageone" >
+   <!-- Pageone header -->
+	<div data-role="header" style=" background:#0097A7;border:0px;height:80px;">
+    <div id='' class='' style="font-size:28px;color:white;text-align:center;">
+      <a href="#" class="ui-btn-left ui-btn ui-icon-back ui-btn-icon-left ui-shadow ui-corner-all" data-rel="back" data-role="button" role="button">返回</a>
+      <img src="../../image/logo.png" width="200px" height="80px">  
+      <a href="../home/home.php" target="_self" class="ui-btn-right ui-btn ui-icon-home ui-btn-icon-left ui-shadow ui-corner-all" data-role="button" role="button">首頁</a>
+    </div>
+  </div>
+    <div style="background:#001F33;border:0px;height:50px;">
+      <br/>
+      <div style="font-size:22px;color:white;text-align:center;">app推播</div>
+    </div>
+    <span id="wn-unsupported" class="hidden">API not supported</span>
+
+    <form id="custom-notification" action="">
+      <label for="title">標題:</label>
+      <input type="text" id="title" name="title" />
+
+      <label for="body">內容:</label>
+      <textarea id="body" name="body"></textarea>
+
+      <div class="buttons-wrapper">
+        <button id="button-wn-show-preset" class="button-demo">推播</button>
+      </div>
+    </form>
+
+    <script>
+      if (!('Notification' in window)) {
+        document.getElementById('wn-unsupported').classList.remove('hidden');
+        document.getElementById('button-wn-show-custom').setAttribute('disabled', 'disabled');
+      } else {
+        var log = document.getElementById('log');
+        var notificationEvents = ['onclick', 'onshow', 'onerror', 'onclose'];
+
+        function notifyUser(event) {
+          var title;
+          var options;
+
+          event.preventDefault();
+
+          if (event.target.id === 'button-wn-show-custom') {
+            title = document.getElementById('title').value;
+            options = {
+              body: document.getElementById('body').value,
+              tag: 'custom'
+            };
+          } else {
+            title = document.getElementById('title').value;
+            options = {
+              body: document.getElementById('body').value,
+              tag: 'custom'
+            };
+          }
+
+          Notification.requestPermission(function() {
+            var notification = new Notification(title, options);
+
+            notificationEvents.forEach(function(eventName) {
+              notification[eventName] = function(event) {
+                log.innerHTML = 'Event "' + event.type + '" triggered for notification "' + notification.tag + '"<br />' + log.innerHTML;
+              };
+            });
+          });
+        }
+
+        document.getElementById('button-wn-show-preset').addEventListener('click', notifyUser);
+        document.getElementById('button-wn-show-custom').addEventListener('click', notifyUser);
+        document.getElementById('clear-log').addEventListener('click', function() {
+          log.innerHTML = '';
+        });
+      }
+    </script> 
+</div>
+<!--end pageone -->
+</body>
+</html>

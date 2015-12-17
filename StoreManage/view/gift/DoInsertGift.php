@@ -41,14 +41,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		exit;
 	}
 
-/*
 	if(!in_array($file["type"], $uptypes))
 	//檢查檔案類型
 	{
 		echo "檔案類型不符!".$file["type"];
 		exit;
 	}
-*/
+
 
 	$field_file = $_FILES['file'];
 	$filename=$_FILES['file']['name'];
@@ -77,7 +76,5 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 }
 
 header('Location: Gift.php');
-
-
 
 ?>

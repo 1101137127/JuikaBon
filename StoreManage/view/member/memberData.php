@@ -8,28 +8,7 @@
 	$stmt->execute();
 
         $msg.='';
-//	foreach ($stmt->fetchAll(PDO::FETCH_ASSOC) as $row) {
-//		$msg.='
-//                <div class="ui-field-contain">
-//                <label>姓名:</label>
-//                <input type="text" name="text-12" id="text-12"  readonly="readonly" value="' . $row['name'] . '"></div>
-//                <div class="ui-field-contain">
-//                <label for="text-12" class="ui-btn ui-btn-inline">電話:</label>
-//                <input type="text" name="text-12" id="text-12"  readonly="readonly" value="' . $row['cellphone'] . '"></div>
-//                <div class="ui-field-contain">
-//                <label for="text-12" class="ui-btn ui-btn-inline">密碼:</label>
-//                <input type="text" name="text-12" id="text-12"  readonly="readonly" value="' . $row['password'] . '"></div>
-//                <div class="ui-field-contain">
-//                <label for="text-12" class="ui-btn ui-btn-inline">生日:</label>
-//                <input type="text" name="text-12" id="text-12"  readonly="readonly" value="' . $row['birthday'] . '"></div>
-//                <div class="ui-field-contain">
-//                <label for="text-12" class="ui-btn ui-btn-inline">性別:</label>
-//                <input type="text" name="text-12" id="text-12"  readonly="readonly" value="' . $row['gender'] . '"></div>
-//                <div class="ui-field-contain">
-//                <label for="text-12" class="ui-btn ui-btn-inline">地址:</label>
-//                <input type="text" name="text-12" id="text-12"  readonly="readonly" value="' . $row['address'] . '"></div>
-//                ';
-//	}
+
         foreach ($stmt->fetchAll(PDO::FETCH_ASSOC) as $row) {
 	      $msg.='
                 <div data-role="main" class="ui-content" >

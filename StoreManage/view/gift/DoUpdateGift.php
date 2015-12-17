@@ -20,8 +20,7 @@ $destination_folder="gift/"; //上傳檔路徑
 	
 
 echo '<a href="../login/model/logout.php">登出</a>  <br><br>';
-if($_SESSION['store_id'] != null)
-{
+if($_SESSION['store_id'] != null) {
 	$giftid=$_POST['giftid'];
 	$giftname=$_POST['giftname'];
 	$needpt=$_POST['needpt'];
@@ -40,14 +39,14 @@ if($_SESSION['store_id'] != null)
 			exit;
 		}
 
-/*
+
 		if(!in_array($file["type"], $uptypes))
 		//檢查檔案類型
 		{
 			echo "檔案類型不符!".$file["type"];
 			exit;
 		}
-*/
+
 		
 		//刪除原圖	
 		$stmt1 = $conn->prepare("SELECT imgtype FROM `gift` WHERE `gift_id`= $giftid");
@@ -75,8 +74,7 @@ if($_SESSION['store_id'] != null)
 		
 	}
 }
-else
-{
+else {
         echo '您無權限觀看此頁面!';
         echo '<meta http-equiv=REFRESH CONTENT=2;url=index.php>';
 }

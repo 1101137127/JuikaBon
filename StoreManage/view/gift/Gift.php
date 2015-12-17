@@ -5,8 +5,7 @@ header("Content-Type:text/html; charset=utf-8");
 include("../connectDBModel/db.php");
 
 echo '<a href="../login/model/logout.php">登出</a>  <br><br>';
-if($_SESSION['store_id'] != null)
-{
+if($_SESSION['store_id'] != null) {
 	$storeid = $_SESSION['store_id'];
 	$stmt = $conn->prepare("SELECT `gift_id`,`gift_name` FROM `gift` WHERE `store_id` = $storeid ");
 	$stmt->execute();
@@ -18,19 +17,8 @@ if($_SESSION['store_id'] != null)
 		<a onclick="doConfirm('.$row['gift_id'].')"  id="doConfirm" data-ajax="false">Delete</a>
 		</li>';
 	}
-	
-	/*
-	foreach ($stmt->fetchAll(PDO::FETCH_ASSOC) as $row) {
-		$list.='<li class="ui-li-has-thumb ui-first-child">
-		<a href="GiftDetail.php?id=' . $row['gift_id'] . '" class="ui-btn ui-btn-icon-right ui-icon-carat-r">
-		<input type="checkbox" name="id[]" style="display:none;" value='.$row['gift_id'].'>' . $row['gift_name'] . '
-		
-		</a></li>';
-	}
-	*/
 }
-else
-{
+else {
         echo '您無權限觀看此頁面!';
         echo '<meta http-equiv=REFRESH CONTENT=2;url=index.php>';
 }
